@@ -1,5 +1,5 @@
 import React from 'react';
-import { create } from '../types/dva-core';
+const { create } = require('dva-core');
 import { Provider, connect } from 'react-redux';
 import { Reducer, Action, ReducersMapObject, Dispatch } from 'redux';
 export { connect };
@@ -21,7 +21,7 @@ export default function(options: Options) {
   // eslint-disable-next-line no-underscore-dangle
   const store = app._store;
 
-  app.start = (container: any) => <Provider store={store}>{container}</Provider>;
+  app.start = (container: any) => () => <Provider store={store}>{container}</Provider>;
   app.getStore = () => store;
 
   return app;
