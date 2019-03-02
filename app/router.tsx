@@ -21,6 +21,7 @@ import Home1 from './pages/Home';
 import Account from './pages/Account';
 import Detail from './pages/Detail';
 import Loading from './pages/Loading';
+import Posts from './pages/Posts';
 
 const HomeNavigator = createBottomTabNavigator({
   Home: { screen: Home },
@@ -40,6 +41,7 @@ const MainNavigator = createStackNavigator(
   {
     HomeNavigator: { screen: HomeNavigator },
     Detail: { screen: Detail },
+    Posts: { screen: Posts },
   },
   {
     headerMode: 'float',

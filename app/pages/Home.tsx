@@ -58,6 +58,12 @@ class Home extends Component<IPropsHome> {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'Account' }));
           }}
         />
+        <Button
+          title="Go TO Posts"
+          onPress={() => {
+            this.props.dispatch(NavigationActions.navigate({ routeName: 'Posts' }));
+          }}
+        />
       </View>
     );
   }
