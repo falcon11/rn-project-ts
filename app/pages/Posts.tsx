@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
+import { NavigationScreenProps, NavigationActions, SafeAreaView } from 'react-navigation';
 import { connect } from 'react-redux';
 import { createAction } from '../utils';
+import { Post } from '../models/states/posts';
+import { Button } from '../components';
 
 interface Props {
-  posts: any;
+  posts: Post[];
   dispatch?: any;
-}
-
-interface Item {
-  id: string;
-  title: string;
-  body: string;
 }
 
 function mapStateToProps(state: any) {
@@ -27,14 +23,18 @@ class Posts extends Component<Props & NavigationScreenProps> {
     this.props.dispatch(createAction('posts/getPosts')());
   }
 
+  goAddPost = () => {
+    this.props.dispatch(NavigationActions.navigate({ routeName: 'AddPost' }));
+  };
+
   render() {
     const { posts } = this.props;
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <FlatList
           style={{ flex: 1 }}
           data={posts}
-          keyExtractor={(item: Item, index) => `${item.id}`}
+          keyExtractor={(item: Post, index) => `${item.id}`}
           renderItem={({ item, index }) => {
             return (
               <View style={{ padding: 8 }}>
@@ -52,7 +52,8 @@ class Posts extends Component<Props & NavigationScreenProps> {
             />
           )}
         />
-      </View>
+        <Button text={'add post'} onPress={this.goAddPost} />
+      </SafeAreaView>
     );
   }
 }

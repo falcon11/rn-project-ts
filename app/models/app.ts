@@ -9,6 +9,7 @@ export default {
     login: false,
     loading: true,
     fetching: false,
+    userId: '10022',
   } as AppState,
   reducers: {
     updateState(state, { payload }) {
