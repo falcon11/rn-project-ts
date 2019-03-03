@@ -37,6 +37,7 @@ class Posts extends Component<Props & NavigationScreenProps> {
     };
   };
   componentDidMount() {
+    // add will focus listener, because sometimes first get posts will fail
     this.willFocusListener = this.props.navigation.addListener('willFocus', () => {
       this.getPosts();
     });
