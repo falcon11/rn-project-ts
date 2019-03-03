@@ -6,7 +6,9 @@ import { PostsState, AppState } from './states';
 export default {
   namespace: 'posts',
   state: {
+    getingPosts: false,
     posts: [],
+    post: null,
   } as PostsState,
   reducers: {
     updateState(state, { payload }) {
@@ -15,7 +17,9 @@ export default {
   },
   effects: {
     *getPosts({ payload }, { call, put, select }) {
+      yield put(createAction('updateState')({ getingPosts: true }));
       const response = yield call(http.get, '/posts');
+      yield put(createAction('updateState')({ getingPosts: false }));
       if (response) {
         yield put(createAction('updateState')({ posts: response.data }));
       }
@@ -27,7 +31,12 @@ export default {
       const response = yield call(http.post, '/posts', { title, body, userId: appData.userId });
       if (response) {
         yield put(createAction('updateState')({ posts: [response.data, ...postsData.posts] }));
+        yield put(NavigationActions.back());
       }
+    },
+    *selectPost({ payload }, { put }) {
+      const { post } = payload;
+      yield put(createAction('updateState')({ post: post }));
     },
   },
   subscriptions: {},

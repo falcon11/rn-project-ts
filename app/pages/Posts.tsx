@@ -5,13 +5,15 @@ import {
   NavigationActions,
   NavigationTabScreenOptions,
   SafeAreaView,
+  NavigationEventSubscription,
 } from 'react-navigation';
 import { connect } from 'react-redux';
 import { createAction } from '../utils';
 import { Post } from '../models/states/posts';
-import { Button } from '../components';
+import { Button, Touchable } from '../components';
 
 interface Props {
+  getingPosts: boolean;
   posts: Post[];
   dispatch?: any;
 }
@@ -21,6 +23,7 @@ function mapStateToProps(state: any) {
 }
 
 class Posts extends Component<Props & NavigationScreenProps> {
+  willFocusListener: NavigationEventSubscription | null = null;
   static navigationOptions: (navigation: any) => NavigationTabScreenOptions = (navigation: any) => {
     return {
       title: 'Posts',
@@ -34,11 +37,32 @@ class Posts extends Component<Props & NavigationScreenProps> {
     };
   };
   componentDidMount() {
-    this.props.dispatch(createAction('posts/getPosts')());
+    this.willFocusListener = this.props.navigation.addListener('willFocus', () => {
+      this.getPosts();
+    });
   }
+
+  componentWillUnmount() {
+    if (this.willFocusListener) {
+      this.willFocusListener.remove();
+    }
+  }
+
+  getPosts = () => {
+    if (this.props.posts.length === 0 && !this.props.getingPosts) {
+      this.props.dispatch(createAction('posts/getPosts')());
+    }
+  };
 
   goAddPost = () => {
     this.props.dispatch(NavigationActions.navigate({ routeName: 'AddPost' }));
+  };
+
+  goPostDetail = (post: Post) => {
+    this.props.dispatch(createAction('posts/selectPost')({ post }));
+    this.props.dispatch(
+      NavigationActions.navigate({ routeName: 'Detail', params: { from: 'Posts' } })
+    );
   };
 
   render() {
@@ -51,10 +75,10 @@ class Posts extends Component<Props & NavigationScreenProps> {
           keyExtractor={(item: Post, index) => `${item.id}`}
           renderItem={({ item, index }) => {
             return (
-              <View style={{ padding: 8 }}>
+              <Touchable style={{ padding: 8 }} onPress={() => this.goPostDetail(item)}>
                 <Text style={{ fontSize: 17 }}>{item.title}</Text>
                 <Text style={{ marginTop: 12, color: 'gray' }}>{item.body}</Text>
-              </View>
+              </Touchable>
             );
           }}
           ItemSeparatorComponent={() => (

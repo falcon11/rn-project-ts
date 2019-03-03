@@ -4,5 +4,7 @@ export interface Post {
   body: string;
 }
 export type PostsState = {
+  getingPosts: boolean;
   posts: Post[];
+  post: Post | null;
 };

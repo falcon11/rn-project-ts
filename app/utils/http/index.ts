@@ -17,7 +17,7 @@ axios.interceptors.response.use(
     return response;
   },
   (error: any) => {
-    console.log(`${'/******************** begin ********************/'}`);
+    console.log('/******************** begin ********************/');
     console.log('url', error.config.url);
     console.log('error', error.message);
     if (error.response) {
@@ -45,7 +45,7 @@ axios.interceptors.response.use(
       console.log('Error', error.message);
     }
     console.log('config', error.config);
-    console.log(`${'/******************** end ********************/'}`);
+    console.log('/******************** end ********************/');
     // Promise.reject(error);
   }
 );
