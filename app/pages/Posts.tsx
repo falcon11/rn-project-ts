@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { NavigationScreenProps, NavigationActions, SafeAreaView } from 'react-navigation';
+import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import {
+  NavigationScreenProps,
+  NavigationActions,
+  NavigationTabScreenOptions,
+  SafeAreaView,
+} from 'react-navigation';
 import { connect } from 'react-redux';
 import { createAction } from '../utils';
 import { Post } from '../models/states/posts';
@@ -16,8 +21,17 @@ function mapStateToProps(state: any) {
 }
 
 class Posts extends Component<Props & NavigationScreenProps> {
-  static navigationOptions = (navigation: any) => {
-    return { title: 'Posts' };
+  static navigationOptions: (navigation: any) => NavigationTabScreenOptions = (navigation: any) => {
+    return {
+      title: 'Posts',
+      tabBarLabel: 'Posts',
+      tabBarIcon: ({ focused, tintColor }) => (
+        <Image
+          style={[styles.icon, { tintColor: focused ? tintColor : 'gray' }]}
+          source={require('../images/posts.png')}
+        />
+      ),
+    };
   };
   componentDidMount() {
     this.props.dispatch(createAction('posts/getPosts')());
@@ -57,5 +71,23 @@ class Posts extends Component<Props & NavigationScreenProps> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  icon: {
+    width: 32,
+    height: 32,
+  },
+});
 
 export default connect(mapStateToProps)(Posts);

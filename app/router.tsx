@@ -26,7 +26,7 @@ import AddPost from './pages/AddPost';
 
 const HomeNavigator = createBottomTabNavigator({
   Home: { screen: Home },
-  Home1: { screen: Home1 },
+  Posts: { screen: Posts },
   Account: { screen: Account },
 });
 
@@ -42,7 +42,6 @@ const MainNavigator = createStackNavigator(
   {
     HomeNavigator: { screen: HomeNavigator },
     Detail: { screen: Detail },
-    Posts: { screen: Posts },
     AddPost: { screen: AddPost },
   },
   {
@@ -107,7 +106,6 @@ function getActiveRouteName(navigationState: NavigationState) {
   return route.routeName;
 }
 interface IProps {
-  count: ModelsStates.countState;
   app: ModelsStates.AppState;
   router: any;
   dispatch: any;
@@ -147,7 +145,6 @@ class Router extends PureComponent<IProps> {
 // @connect(({ app, router }) => ({ app, router }))
 function mapStateToProps(state: any) {
   return {
-    count: state.count,
     router: state.router,
     app: state.app,
   };

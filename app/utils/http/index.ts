@@ -18,6 +18,8 @@ axios.interceptors.response.use(
   },
   (error: any) => {
     console.log(`${'/******************** begin ********************/'}`);
+    console.log('url', error.config.url);
+    console.log('error', error.message);
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
