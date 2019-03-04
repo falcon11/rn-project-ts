@@ -136,8 +136,6 @@ class Router extends PureComponent<IProps> {
     const { dispatch, router, app } = this.props;
     if (app.loading) return <Loading />;
 
-    if (app.loading) return <Loading />;
-
     return <App dispatch={dispatch} state={router} />;
   }
 }

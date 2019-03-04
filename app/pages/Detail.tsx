@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Post, PostsState } from '../models/states/posts';
 import { connect } from 'react-redux';
@@ -20,6 +20,7 @@ class Detail extends Component<IPropsDetail> {
         <Text style={styles.text}>Detail from {this.props.navigation.state.params.from}</Text>
         <Text style={styles.text}>{post.title}</Text>
         <Text style={[styles.text, { color: 'gray', fontSize: 17 }]}>{post.body}</Text>
+        <Image source={{ uri: post.image }} style={{ width: 100, height: 100 }} />
       </View>
     );
   }

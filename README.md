@@ -13,7 +13,7 @@ react-native run-ios # or react-native run-android
 
 ## To DO
 
-- [ ] add network request
+- [x] add network request
 
 ## reference
 
